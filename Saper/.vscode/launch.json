@@ -9,23 +9,9 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "Saper_d1ae83e6"
-        },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "Saper_d7955d34"
-        },
-        {
-            "type": "java",
-            "name": "App",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "Saper",
+            "projectName": "Saper_d1ae83e6",
             "vmArgs": "--module-path /home/bartek/Downloads/openjfx-20_linux-x64_bin-sdk/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
-        }
+        },
     ]
 }
 
