@@ -4,7 +4,6 @@ import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -18,12 +17,14 @@ public class GUI{
 
 
       Pane pane = (Pane) scene.lookup("#MyPane");
-      pane.setClip(new Rectangle(0,0, stage.getWidth(), stage.getHeight()));
-      Rectangle rec = new Rectangle(0,0,2000,2000);
-      rec.setFill(Color.AQUA);
-      pane.getChildren().add(rec);
-      stage.setHeight(850);
-      stage.setWidth(700);
+      pane.setClip(new Rectangle(0,0, Settings.getWindowWdth(), Settings.getWindowHeight()));
+
+      stage.setHeight(Settings.getWindowHeight());
+      stage.setWidth(Settings.getWindowWdth());
+
+      for (int i = 0; i < Settings.getRows() * Settings.getColumns(); i++){
+        pane.getChildren().add(new MySquare());
+      }
 
       stage.setTitle("Saper");
       stage.setScene(scene);
