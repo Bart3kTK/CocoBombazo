@@ -1,4 +1,7 @@
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class MySquare extends Rectangle {
@@ -6,11 +9,12 @@ public class MySquare extends Rectangle {
     private int index;
     private int row;
     private int column;
+    private boolean isClicked = false;
 
     public MySquare(){
         index = classCounter;
-        column = index / Settings.getColumns();
-        row = index % Settings.getRows();
+        column = index % Settings.getColumns();
+        row = index / Settings.getRows();
         classCounter ++;
 
         setWidth(calcSide());
@@ -18,12 +22,18 @@ public class MySquare extends Rectangle {
         setFill(Color.web("#A5CCC5"));
         setStroke(Color.web("#000000"));
 
-        setX(Settings.getMargin() + row * calcSide());
-        setY(Settings.getMargin() + column * calcSide());
+        setY(Settings.getMargin() + row * calcSide());
+        setX(Settings.getMargin() + column * calcSide());
 
         setOnMouseClicked(e -> {
-            System.out.println("Moj index to " + index);
-            setVisible(false);
+            if (e.getButton() == MouseButton.PRIMARY){
+                isClicked = true;
+                setVisible(false);
+            }
+            if (e.getButton() == MouseButton.SECONDARY){
+                setFill(new ImagePattern(new Image("palma.png")));
+            }
+
         });
 
 
@@ -31,7 +41,18 @@ public class MySquare extends Rectangle {
 
 
     }
-    
+    public int getIndex(){
+        return index;
+    }
+
+    public boolean isClicked(){
+        return isClicked;
+    }
+
+    public void setIsClicked(){
+        isClicked = false;
+    }
+
     public double calcSide(){
         return (Settings.getWindowWdth() - Settings.getMargin()*2 ) / (Settings.getRows()*1.0);
     } 

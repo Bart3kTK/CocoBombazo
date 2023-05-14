@@ -1,5 +1,8 @@
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,10 +24,8 @@ public class GUI{
 
       stage.setHeight(Settings.getWindowHeight());
       stage.setWidth(Settings.getWindowWdth());
-
-      for (int i = 0; i < Settings.getRows() * Settings.getColumns(); i++){
-        pane.getChildren().add(new MySquare());
-      }
+      
+      new GUIPane(pane);
 
       stage.setTitle("Saper");
       stage.setScene(scene);
