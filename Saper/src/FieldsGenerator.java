@@ -9,7 +9,6 @@ public class FieldsGenerator {
     private static int actualField = -1;
     private static ArrayList<Integer> generatedFields = new ArrayList<>(); // -1 - bomb    0-none  1- one bomb in neighborhood .... 
 
-    private static ArrayList<Integer> unvisibleFields = new ArrayList<>(); //1 - in game 0 - out of game
 
     private static Random random = new Random();
 
