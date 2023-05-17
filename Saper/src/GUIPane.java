@@ -5,8 +5,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class GUIPane {
-    private int mouseClicks = 0;
     private boolean firsClick = true;
+
     public GUIPane(Pane pane){
         ArrayList<MySquare> objList = new ArrayList<>();
         ArrayList<Integer> usedFields = new ArrayList<>(); //1 - in game 0 - out of game
@@ -23,14 +23,9 @@ public class GUIPane {
             for (MySquare r : objList){
                 if (r.isClicked() == true){
                     FieldsGenerator.setActualField(r.getIndex());
-                    //r.setIsClicked();
                     break;
                 }
             }
-            // for (MySquare r : objList){
-                
-                
-            // }
             if (event.getButton() == MouseButton.PRIMARY){
                 if (firsClick == true){
                     firsClick = false;
@@ -42,22 +37,30 @@ public class GUIPane {
                             r.setVisible(false);
                             usedFields.set(r.getIndex(), 0);
                         }
+                        if ( FieldsGenerator.getGeneratedFields().get(r.getIndex()) == -1) r.setBomb();
                     }
                 }
-                System.out.println(usedFields);
-                System.out.println(FieldsGenerator.getGeneratedFields());
+                System.out.println(8);
                 for (MySquare r : objList){
-
-                    if ( FieldsGenerator.getGeneratedFields().get(r.getIndex()) == -1) r.setFill(Color.BLACK);
-
+                    //System.out.println(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
 
                     if ( FieldsGenerator.getGeneratedFields().get(r.getIndex()) == 0){
+                        System.out.println(0);
                         for (int neighbor : FieldsGenerator.getNeighbors(r.getIndex())){
                             if (usedFields.get(neighbor) == 0) {
                                 r.setVisible(false); 
                                 usedFields.set(r.getIndex(), 0);
                             }
                         }
+                    }
+                    if (FieldsGenerator.getGeneratedFields().get(r.getIndex()) > 0){
+                        for (int neighbor : FieldsGenerator.getNeighbors(r.getIndex())){
+                            if (usedFields.get(neighbor) == 0) {
+                                usedFields.set(r.getIndex(), -1);
+                                r.setImageNb(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
+
+                            }
+                        }  
                     }
 
                     
@@ -66,10 +69,16 @@ public class GUIPane {
                         r.setIsClicked();
                     }
             }
+        }
                 
-            }
         });
 
+        // for (MySquare r : objList){
+        //     if (r.isClicked() == true){
+        //         FieldsGenerator.setActualField(r.getIndex());
+        //         break;
+        //     }
+        // }
     }
     
 }

@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -12,10 +11,10 @@ public class FieldsGenerator {
 
     private static Random random = new Random();
 
-    public FieldsGenerator(int field){
-        Set<Integer> uniqueNumbers = new HashSet<>();
+    // public FieldsGenerator(int field){
+    //     Set<Integer> uniqueNumbers = new HashSet<>();
 
-    }
+    // }
 
 
     public static int getActualField() {
@@ -47,7 +46,6 @@ public class FieldsGenerator {
             if(d == 0 || d == -1) continue;
 
             int counter = 0;
-            System.out.println(getNeighbors(d));
             for (int e : getNeighbors(bombAndNb.indexOf(d))){
                 if(bombAndNb.get(e) == -1) counter++;
             }

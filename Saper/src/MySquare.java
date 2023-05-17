@@ -31,7 +31,7 @@ public class MySquare extends Rectangle {
                 setVisible(false);
             }
             if (e.getButton() == MouseButton.SECONDARY){
-                setFill(new ImagePattern(new Image("palma.png")));
+                setFill(new ImagePattern(new Image("pics/palma.png")));
             }
 
         });
@@ -43,6 +43,16 @@ public class MySquare extends Rectangle {
     }
     public int getIndex(){
         return index;
+    }
+
+    public void setBomb(){
+        setFill(new ImagePattern(new Image("pics/Kokos.png")));
+    }
+
+    public void setImageNb(int nb){
+        if (nb >= 0 && nb <= 8)
+            setFill(new ImagePattern(new Image("pics/" + Integer.toString(nb) + ".png")));
+        else System.out.println("Wrong nb in loading ->" + nb);
     }
 
     public boolean isClicked(){

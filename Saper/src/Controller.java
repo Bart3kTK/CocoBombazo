@@ -19,7 +19,7 @@ public class Controller {
     }
 
     public void playMusic(){
-        String soundFile = "SoundTest.mp3";
+        String soundFile = "soundtrack/SoundTest.mp3";
         String path = getClass().getResource(soundFile).getPath();
         Media sound = new Media(new File(path).toURI().toString());
         MediaPlayer snd = new MediaPlayer(sound);
