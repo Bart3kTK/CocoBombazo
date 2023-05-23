@@ -18,6 +18,22 @@ public class GUIPane {
           pane.getChildren().add(sq);
           objList.add(sq);
         }
+        for(int i = 0; i < Settings.getRows() * Settings.getColumns(); i++){
+            ArrayList<MySquare> temp = new ArrayList<>();
+            int tempRow = (i/Settings.getColumns()) - 1;
+            int tempCol = (i%Settings.getColumns()) - 1;
+            for (int a = 1; a < 10; a++){
+                if (tempCol >= 0 && tempRow >= 0){
+                    temp.add(objList.get(tempRow * Settings.getColumns() + tempCol));
+                }
+                tempCol ++;
+                if (a%3 == 0){
+                    tempCol -= 3;
+                    tempRow ++;
+                }
+            }
+            objList.get(i).setNeig(temp);
+        }
 
         pane.setOnMouseClicked(event -> {
             for (MySquare r : objList){

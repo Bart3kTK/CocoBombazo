@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
@@ -10,6 +12,7 @@ public class MySquare extends Rectangle {
     private int row;
     private int column;
     private boolean isClicked = false;
+    private ArrayList<MySquare> neig = new ArrayList<>();
 
     public MySquare(){
         index = classCounter;
@@ -43,6 +46,9 @@ public class MySquare extends Rectangle {
     }
     public int getIndex(){
         return index;
+    }
+    public void setNeig(ArrayList<MySquare> n){
+        neig = n;
     }
 
     public void setBomb(){
