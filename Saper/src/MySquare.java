@@ -13,6 +13,7 @@ public class MySquare extends Rectangle {
     private int column;
     private boolean isClicked = false;
     private ArrayList<MySquare> neig = new ArrayList<>();
+    private int myStatus = -1;
 
     public MySquare(){
         index = classCounter;
@@ -50,6 +51,23 @@ public class MySquare extends Rectangle {
     public void setNeig(ArrayList<MySquare> n){
         neig = n;
     }
+    public void loadStatus(int statId){
+        myStatus = statId;
+    }
+
+    public int getStatus(){
+        return myStatus;
+    }
+    public void loadSquare(){
+        for (MySquare n : neig){
+            if(n.getStatus() == 0 && n.isClicked){
+                setIsClicked();
+            }
+        }
+        if (isClicked == true){
+            setVisible(false);
+        }
+    }
 
     public void setBomb(){
         setFill(new ImagePattern(new Image("pics/Kokos.png")));
@@ -66,7 +84,7 @@ public class MySquare extends Rectangle {
     }
 
     public void setIsClicked(){
-        isClicked = false;
+        isClicked = true;
     }
 
     public double calcSide(){

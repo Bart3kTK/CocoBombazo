@@ -60,10 +60,14 @@ public class FieldsGenerator {
         int point = actualF;
         if (actualF >= 0){
             ArrayList<Integer> startFields = new ArrayList<>();
-            while(Settings.getStartFields() > startFields.size()){
+            
+            while(Settings.getStartFields() >= startFields.size()){
                 for (int id : getNeighbors(point)){
                     if (!startFields.contains(id))
+                    {
                         startFields.add(id);
+                        continue;
+                    }
                 }
                 point = startFields.get(random.nextInt(startFields.size()));
             }
