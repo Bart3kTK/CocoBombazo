@@ -39,11 +39,10 @@ public class GUIPane {
 
         pane.setOnMouseClicked(event -> {
             for (MySquare r : objList){
-                if (r.isClicked() == true){
+                if (r.isNowClicked() == true){
                     FieldsGenerator.setActualField(r.getIndex());
-                    break;
+                    r.unClick();
                 }
-                r.loadSquare();
             }
             if (event.getButton() == MouseButton.PRIMARY && FieldsGenerator.getActualField() != -1){
                 if (firsClick == true){
@@ -52,19 +51,18 @@ public class GUIPane {
                     FieldsGenerator.genBombAndNumbers(startFields);
                     for (MySquare r : objList){
 
-                        r.loadStatus(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
-
                         if(startFields.contains(r.getIndex())){
                             r.setIsClicked();
-                            System.out.println(r.getStatus());
-                            System.out.println();
-
                         }
+                        r.loadStatus(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
                     }
 
                     
+                }
             }
-        }
+            for (MySquare r : objList){
+                r.loadSquare();
+                }
                 
         });
     }

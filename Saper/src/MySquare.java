@@ -14,6 +14,7 @@ public class MySquare extends Rectangle {
     private boolean isClicked = false;
     private ArrayList<MySquare> neig = new ArrayList<>();
     private int myStatus = -1;
+    private boolean nowClicked = false;
 
     public MySquare(){
         index = classCounter;
@@ -31,6 +32,7 @@ public class MySquare extends Rectangle {
 
         setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY){
+                nowClicked = true;
                 isClicked = true;
                 setVisible(false);
             }
@@ -61,10 +63,12 @@ public class MySquare extends Rectangle {
     public void loadSquare(){
         for (MySquare n : neig){
             if(n.getStatus() == 0 && n.isClicked){
-                setIsClicked();
+                if (myStatus > 0) setImageNb(myStatus);
+                else setIsClicked();
+
             }
         }
-        if (isClicked == true){
+        if (isClicked == true && myStatus == 0){
             setVisible(false);
         }
     }
@@ -90,5 +94,13 @@ public class MySquare extends Rectangle {
     public double calcSide(){
         return (Settings.getWindowWdth() - Settings.getMargin()*2 ) / (Settings.getRows()*1.0);
     } 
+
+    public boolean isNowClicked(){
+        return nowClicked;
+    }
+
+    public void unClick(){
+        nowClicked = false;
+    }
     
 }
