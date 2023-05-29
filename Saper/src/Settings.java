@@ -5,7 +5,7 @@ public class Settings {
     private static int rows = 10;
     private static int columns = 10;
     private static double margin = 50.0;
-    private static int bombs = 35;
+    private static int bombs = 10;
     private static int startFields = 11; //first click shows nb of startFields fields -> difficulty depends on startFields
 
 

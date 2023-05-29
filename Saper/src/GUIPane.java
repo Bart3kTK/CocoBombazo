@@ -29,7 +29,7 @@ public class GUIPane {
             int tempCol = (i%Settings.getColumns());
             for (int a = -1; a<2; a++){
                 for (int b = -1; b<2; b++){
-                    if(tempCol+a >= 0 && tempRow+b >= 0 && tempRow+b < Settings.getRows() && tempCol+a < Settings.getColumns() && a*b == 0 && a+b != 0){
+                    if(tempCol+a >= 0 && tempRow+b >= 0 && tempRow+b < Settings.getRows() && tempCol+a < Settings.getColumns() ){
                         temp.add(objList.get((tempRow+b) * Settings.getColumns() + tempCol+a));
                     }
                 }

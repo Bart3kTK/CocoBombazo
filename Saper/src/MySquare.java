@@ -1,3 +1,4 @@
+import java.io.ObjectInputFilter.Status;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
@@ -34,7 +35,10 @@ public class MySquare extends Rectangle {
             if (e.getButton() == MouseButton.PRIMARY){
                 nowClicked = true;
                 isClicked = true;
-                setVisible(false);
+                if (myStatus == 0) setVisible(false);
+                else if (myStatus == -1) setBomb();
+                else setImageNb(myStatus);
+                
             }
             if (e.getButton() == MouseButton.SECONDARY){
                 setFill(new ImagePattern(new Image("pics/palma.png")));
