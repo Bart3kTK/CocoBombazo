@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public class GUIPane {
     private boolean firsClick = true;
@@ -38,33 +36,33 @@ public class GUIPane {
         }
 
         pane.setOnMouseClicked(event -> {
-            for (MySquare r : objList){
-                if (r.isNowClicked() == true){
-                    FieldsGenerator.setActualField(r.getIndex());
-                    r.unClick();
-                }
-            }
-            if (event.getButton() == MouseButton.PRIMARY && FieldsGenerator.getActualField() != -1){
-                if (firsClick == true){
-                    firsClick = false;
-                    ArrayList<Integer> startFields = FieldsGenerator.generateStartFields(FieldsGenerator.getActualField());
-                    FieldsGenerator.genBombAndNumbers(startFields);
+            if (event.getButton() == MouseButton.PRIMARY)
+            {
+                if (FieldsGenerator.getActualField() == -1){
                     for (MySquare r : objList){
-
-                        if(startFields.contains(r.getIndex())){
-                            r.setIsClicked();
-                        }
-                        r.loadStatus(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
+                        if (r.isNowClicked() == true){
+                            FieldsGenerator.setActualField(r.getIndex());
+                            r.unClick();
+                        } 
                     }
+                }
+                if (FieldsGenerator.getActualField() != -1 && firsClick == true){
+                        firsClick = false;
+                        ArrayList<Integer> startFields = FieldsGenerator.generateStartFields(FieldsGenerator.getActualField());
+                        FieldsGenerator.genBombAndNumbers(startFields);
 
-                    
+                        for (MySquare r : objList){
+                            if(startFields.contains(r.getIndex())) r.setIsClicked();
+                            r.loadStatus(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
+                            r.loadSquare();
+                        }
+                    }
+                for (MySquare r : objList){
+                        r.loadSquare();
+                    }
                 }
-            }
-            for (MySquare r : objList){
-                r.loadSquare();
-                }
-                
         });
+        
     }
     
 }

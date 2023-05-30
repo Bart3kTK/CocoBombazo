@@ -14,8 +14,10 @@ public class MySquare extends Rectangle {
     private int column;
     private boolean isClicked = false;
     private ArrayList<MySquare> neig = new ArrayList<>();
-    private int myStatus = -1;
+    private int myStatus = 0;
     private boolean nowClicked = false;
+    private boolean isPalm = false;
+    private boolean loaded = false;
 
     public MySquare(){
         index = classCounter;
@@ -41,7 +43,16 @@ public class MySquare extends Rectangle {
                 
             }
             if (e.getButton() == MouseButton.SECONDARY){
-                setFill(new ImagePattern(new Image("pics/palma.png")));
+                if (isPalm == false)
+                {
+                    setFill(new ImagePattern(new Image("pics/palma.png")));
+                    isPalm = true;
+                } 
+                else 
+                {
+                    setFill(Color.web("#A5CCC5"));
+                    isPalm = false;
+                }
             }
 
         });
@@ -65,15 +76,23 @@ public class MySquare extends Rectangle {
         return myStatus;
     }
     public void loadSquare(){
-        for (MySquare n : neig){
-            if(n.getStatus() == 0 && n.isClicked){
-                if (myStatus > 0) setImageNb(myStatus);
-                else setIsClicked();
-
-            }
-        }
         if (isClicked == true && myStatus == 0){
             setVisible(false);
+            loaded = true;
+        }
+        else {
+            for (MySquare n : neig){
+                if(n.getStatus() == 0 && n.isClicked == true && n.isLoaded()){
+                    if (myStatus > 0)
+                    {
+                        setImageNb(myStatus);
+                        loaded = true;
+                        break;
+                    }
+                    else setIsClicked();
+
+                }
+            }
         }
     }
 
@@ -105,6 +124,10 @@ public class MySquare extends Rectangle {
 
     public void unClick(){
         nowClicked = false;
+    }
+
+    public boolean isLoaded(){
+        return loaded;
     }
     
 }

@@ -11,10 +11,6 @@ public class FieldsGenerator {
 
     private static Random random = new Random();
 
-    // public FieldsGenerator(int field){
-    //     Set<Integer> uniqueNumbers = new HashSet<>();
-
-    // }
 
 
     public static int getActualField() {
