@@ -33,11 +33,12 @@ public class FieldsGenerator {
         bombInposiblePlaces.addAll(set);
         while (bombs < Settings.getBombs()){
             int nb = random.nextInt(Settings.getRows() * Settings.getColumns());
-            if (bombInposiblePlaces.contains(nb) == false){
+            if (bombInposiblePlaces.contains(nb) == false && bombAndNb.get(nb) != -1){
                 bombAndNb.set(nb, -1);
                 bombs ++;
             }
         }
+        System.out.println(bombAndNb);
         for (int d : bombAndNb){
             if(d == 0 || d == -1) continue;
 

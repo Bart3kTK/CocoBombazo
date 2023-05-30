@@ -5,11 +5,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 
 public class Controller {
 
     @FXML
     private Pane MyPane;
+
+    @FXML
+    private Text MyTimer;
+
 
     @FXML
     void buttonTestClicked(MouseEvent event) {
@@ -28,6 +33,7 @@ public class Controller {
         
             
     }
+
 
 
 }

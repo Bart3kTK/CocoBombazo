@@ -32,7 +32,7 @@
       <Pane prefHeight="40.0" prefWidth="600.0">
          <children>
             <Text layoutX="20.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:" wrappingWidth="80.69580078125" />
-            <Text layoutX="316.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIme:" />
+            <Text fx:id="MyTimer" layoutX="311.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIme: " wrappingWidth="95.81640625" />
             <Text layoutX="461.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Best score:" />
             <Button layoutX="158.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#buttonTestClicked" text="mp3 test" />
          </children>

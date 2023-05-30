@@ -76,23 +76,22 @@ public class MySquare extends Rectangle {
         return myStatus;
     }
     public void loadSquare(){
-        if (isClicked == true && myStatus == 0){
-            setVisible(false);
-            loaded = true;
-        }
-        else {
+        if (isClicked == false)
+        {
             for (MySquare n : neig){
-                if(n.getStatus() == 0 && n.isClicked == true && n.isLoaded()){
-                    if (myStatus > 0)
-                    {
-                        setImageNb(myStatus);
-                        loaded = true;
-                        break;
-                    }
-                    else setIsClicked();
-
+                if(n.getStatus() == 0 && n.isClicked == true){
+                    setIsClicked();
+                    break;
                 }
             }
+        }
+        if (isClicked == true)
+        {
+            if(myStatus == 0)
+                setVisible(false);
+            else if(myStatus > 0)
+                setImageNb(myStatus);
+            loaded = true;
         }
     }
 

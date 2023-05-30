@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class GUI{
@@ -18,12 +19,14 @@ public class GUI{
 
 
       Pane pane = (Pane) scene.lookup("#MyPane");
+      Text timer = (Text) scene.lookup("#MyTimer");
+
       pane.setClip(new Rectangle(0,0, Settings.getWindowWdth(), Settings.getWindowHeight()));
 
       stage.setHeight(Settings.getWindowHeight());
       stage.setWidth(Settings.getWindowWdth());
       
-      new GUIPane(pane);
+      new GUIPane(pane, timer);
 
       stage.setTitle("Saper");
       stage.setScene(scene);

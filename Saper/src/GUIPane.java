@@ -1,19 +1,21 @@
 import java.util.ArrayList;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class GUIPane {
     private boolean firsClick = true;
+    private int countActive = 0;
 
-    public GUIPane(Pane pane){
+    public GUIPane(Pane pane, Text timer){
         ArrayList<MySquare> objList = new ArrayList<>();
-        ArrayList<Integer> usedFields = new ArrayList<>(); //1 - in game 0 - out of game
-
-        for (int i = 0; i<Settings.getRows() * Settings.getColumns(); i++)
-            usedFields.add(1);
+        ArrayList<Integer> usedFields = new ArrayList<>();
+        TimerThtrad th = new TimerThtrad(timer);
+        th.start();
 
         for (int i = 0; i < Settings.getRows() * Settings.getColumns(); i++)
         {
+          usedFields.add(0);
           MySquare sq = new MySquare();
           pane.getChildren().add(sq);
           objList.add(sq);
@@ -57,8 +59,20 @@ public class GUIPane {
                             r.loadSquare();
                         }
                     }
+                countActive = 0;
                 for (MySquare r : objList){
-                        r.loadSquare();
+                    if (r.isLoaded() == false)
+                            r.loadSquare();
+                        if (r.isClicked() == false) countActive ++;
+                        if (r.isClicked() == true && r.getStatus() == -1){
+                            countActive = Settings.getBombs();
+                            break;
+                        }
+                    }
+                }
+                if (countActive == Settings.getBombs()){
+                    for (MySquare r : objList){
+                        if (r.getStatus() == -1) r.setBomb();
                     }
                 }
         });
