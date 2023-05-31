@@ -11,7 +11,6 @@ public class GUIPane {
         ArrayList<MySquare> objList = new ArrayList<>();
         ArrayList<Integer> usedFields = new ArrayList<>();
         TimerThtrad th = new TimerThtrad(timer);
-        th.start();
 
         for (int i = 0; i < Settings.getRows() * Settings.getColumns(); i++)
         {
@@ -50,19 +49,20 @@ public class GUIPane {
                 }
                 if (FieldsGenerator.getActualField() != -1 && firsClick == true){
                         firsClick = false;
+                        th.start();
                         ArrayList<Integer> startFields = FieldsGenerator.generateStartFields(FieldsGenerator.getActualField());
                         FieldsGenerator.genBombAndNumbers(startFields);
 
                         for (MySquare r : objList){
                             if(startFields.contains(r.getIndex())) r.setIsClicked();
                             r.loadStatus(FieldsGenerator.getGeneratedFields().get(r.getIndex()));
-                            r.loadSquare();
                         }
                     }
                 countActive = 0;
                 for (MySquare r : objList){
                     if (r.isLoaded() == false)
-                            r.loadSquare();
+
+                        r.loadSquare();
                         if (r.isClicked() == false) countActive ++;
                         if (r.isClicked() == true && r.getStatus() == -1){
                             countActive = Settings.getBombs();
@@ -73,6 +73,7 @@ public class GUIPane {
                 if (countActive == Settings.getBombs()){
                     for (MySquare r : objList){
                         if (r.getStatus() == -1) r.setBomb();
+                        th.stopRun();
                     }
                 }
         });

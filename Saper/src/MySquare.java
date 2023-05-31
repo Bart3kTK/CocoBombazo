@@ -68,6 +68,9 @@ public class MySquare extends Rectangle {
     public void setNeig(ArrayList<MySquare> n){
         neig = n;
     }
+    public ArrayList<MySquare> getNeig(){
+        return neig;
+    }
     public void loadStatus(int statId){
         myStatus = statId;
     }
@@ -76,19 +79,29 @@ public class MySquare extends Rectangle {
         return myStatus;
     }
     public void loadSquare(){
-        if (isClicked == false)
+        // if (isClicked == false)
+        // {
+        //     for (MySquare n : neig){
+        //         if(n.getStatus() == 0 && n.isClicked == true){
+        //             isClicked = true;
+        //         //     for (MySquare neigh : n.getNeig()){
+        //         //         neigh.setIsClicked();
+        //         //         neigh.loadSquare();
+        //         //     }
+        //             break;
+        //         }
+        //     }
+        // }
+        if (isClicked == true && loaded == false)
         {
-            for (MySquare n : neig){
-                if(n.getStatus() == 0 && n.isClicked == true){
-                    setIsClicked();
-                    break;
-                }
-            }
-        }
-        if (isClicked == true)
-        {
+
             if(myStatus == 0)
+            {
+                for (MySquare n : neig){
+                    n.setIsClicked();
+                }
                 setVisible(false);
+            }
             else if(myStatus > 0)
                 setImageNb(myStatus);
             loaded = true;
