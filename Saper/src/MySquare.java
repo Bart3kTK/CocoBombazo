@@ -34,6 +34,7 @@ public class MySquare extends Rectangle {
         setX(Settings.getMargin() + column * calcSide());
 
         setOnMouseClicked(e -> {
+            System.out.println("moj index to: " + index);
             if (e.getButton() == MouseButton.PRIMARY){
                 nowClicked = true;
                 isClicked = true;
@@ -78,43 +79,45 @@ public class MySquare extends Rectangle {
     public int getStatus(){
         return myStatus;
     }
-    public void loadSquare(){
-        // if (isClicked == false)
-        // {
-        //     for (MySquare n : neig){
-        //         if(n.getStatus() == 0 && n.isClicked == true){
-        //             isClicked = true;
-        //         //     for (MySquare neigh : n.getNeig()){
-        //         //         neigh.setIsClicked();
-        //         //         neigh.loadSquare();
-        //         //     }
-        //             break;
-        //         }
-        //     }
-        // }
-        if (isClicked == true && loaded == false)
-        {
+    // public void loadSquare(){
+    //     // if (isClicked == false)
+    //     // {
+    //     //     for (MySquare n : neig){
+    //     //         if(n.getStatus() == 0 && n.isClicked == true){
+    //     //             isClicked = true;
+    //     //         //     for (MySquare neigh : n.getNeig()){
+    //     //         //         neigh.setIsClicked();
+    //     //         //         neigh.loadSquare();
+    //     //         //     }
+    //     //             break;
+    //     //         }
+    //     //     }
+    //     // }
+    //     if (isClicked == true && loaded == false)
+    //     {
 
-            if(myStatus == 0)
-            {
-                for (MySquare n : neig){
-                    n.setIsClicked();
-                }
-                setVisible(false);
-            }
-            else if(myStatus > 0)
-                setImageNb(myStatus);
-            loaded = true;
-        }
-    }
+    //         if(myStatus == 0)
+    //         {
+    //             for (MySquare n : neig){
+    //                 n.setIsClicked();
+    //             }
+    //             setVisible(false);
+    //         }
+    //         else if(myStatus > 0)
+    //             setImageNb(myStatus);
+    //         loaded = true;
+    //     }
+    // }
 
     public void setBomb(){
         setFill(new ImagePattern(new Image("pics/Kokos.png")));
     }
 
     public void setImageNb(int nb){
-        if (nb >= 0 && nb <= 8)
+        if (nb > 0 && nb <= 8)
             setFill(new ImagePattern(new Image("pics/" + Integer.toString(nb) + ".png")));
+        else if(nb == 0 || nb == 10) setVisible(false);
+        else if (nb == -1) setBomb();
         else System.out.println("Wrong nb in loading ->" + nb);
     }
 
@@ -124,6 +127,7 @@ public class MySquare extends Rectangle {
 
     public void setIsClicked(){
         isClicked = true;
+        setImageNb(myStatus);
     }
 
     public double calcSide(){

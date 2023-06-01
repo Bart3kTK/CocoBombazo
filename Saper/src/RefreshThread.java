@@ -17,15 +17,15 @@ public class RefreshThread extends Thread {
 
     @Override
     public void run(){
-        while (runner){
+        // while (runner){
                 
-                Platform.runLater(() -> sq.loadSquare()); 
-            try {
-                Thread.sleep(133);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        //         Platform.runLater(() -> sq.loadSquare()); 
+        //     try {
+        //         Thread.sleep(133);
+        //     } catch (InterruptedException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
     }
     public void stopRun(){
         runner = false;

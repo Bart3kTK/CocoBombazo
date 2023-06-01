@@ -1,65 +1,91 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class FieldsGenerator {
 
     private static int actualField = -1;
-    private static ArrayList<Integer> generatedFields = new ArrayList<>(); // -1 - bomb    0-none  1- one bomb in neighborhood .... 
-
-
+    private static ArrayList<Integer> generatedStartFields = new ArrayList<>();
+    private static int[][] generatedField = new int[Settings.getColumns()][Settings.getRows()];
     private static Random random = new Random();
 
 
-
-    public static int getActualField() {
-    return actualField;
-    }
-    public static void genBombAndNumbers(ArrayList<Integer> sFields){
-        ArrayList<Integer> bombAndNb = new ArrayList<>();
-        ArrayList<Integer> bombInposiblePlaces = new ArrayList<>();
-        Set<Integer> set = new HashSet<>(bombInposiblePlaces);
+    public static void genBombAndNumbers()
+    {
+        ArrayList<Integer> sFields = generatedStartFields;
+        int [][] bombAndOther = new int[Settings.getColumns()][Settings.getRows()];
         int bombs = 0;
-        for (int a = 0; a < Settings.getRows() * Settings.getColumns(); a++){
-            bombAndNb.add(-2);
+
+        /* setting start index (-2 is possible place to place bomb) */
+        for(int a = 0; a < Settings.getColumns(); a++)
+        {
+            for(int b = 0; b < Settings.getRows(); b++)
+            {
+                bombAndOther[a][b] = -2;
+            }
         }
-        for(int b : sFields){
-            bombAndNb.set(b, 0);
+
+        /* Setting start fields (100% no bomb) and protecting their neighbours */
+        for(int b : sFields)
+        {
+            int actualCol = b % Settings.getColumns();
+            int actualRow = b / Settings.getColumns();
+            bombAndOther[actualCol][actualRow] = 10;
+
+            for (int n : getNeighbors(b))
+            {
+
+                int actualNCol = n % Settings.getColumns();
+                int actualNRow = n / Settings.getColumns();
+
+                if(bombAndOther[actualNCol][actualNRow] != 10)
+                    bombAndOther[actualNCol][actualNRow] = -3;
+            }
         }
-        for(int c : sFields){
-            set.addAll(getNeighbors(c));
-        }
-        bombInposiblePlaces.addAll(set);
-        while (bombs < Settings.getBombs()){
-            int nb = random.nextInt(Settings.getRows() * Settings.getColumns());
-            if (bombInposiblePlaces.contains(nb) == false && bombAndNb.get(nb) != -1){
-                bombAndNb.set(nb, -1);
+
+        /* Putting bombs in available gaps */
+        while (bombs < Settings.getBombs())
+        {
+            int randomCol = random.nextInt(Settings.getColumns());
+            int randomRow = random.nextInt(Settings.getRows());
+
+            if (bombAndOther[randomCol][randomRow] == -2){
+                bombAndOther[randomCol][randomRow] = -1;
                 bombs ++;
             }
         }
-        System.out.println(bombAndNb);
-        for (int d : bombAndNb){
-            if(d == 0 || d == -1) continue;
 
-            int counter = 0;
-            for (int e : getNeighbors(bombAndNb.indexOf(d))){
-                if(bombAndNb.get(e) == -1) counter++;
+        /* Counting bombs in neighbourhood and setting this result*/
+        for(int a = 0; a < Settings.getColumns(); a++)
+        {
+            for(int b = 0; b < Settings.getRows(); b++)
+            {
+                if(bombAndOther[a][b] == 10 || bombAndOther[a][b] == -1) continue;
+                
+                int counter = 0;
+
+                for (int e : getNeighbors(b*Settings.getColumns() + a)){
+                    if(bombAndOther[e % Settings.getColumns()][e / Settings.getColumns()] == -1) counter++;
+                }
+                bombAndOther[a][b] = counter;
             }
-            bombAndNb.set(bombAndNb.indexOf(d) , counter);
         }
-        generatedFields = bombAndNb;
-
-
+        generatedField = bombAndOther;
     }
 
-    public static ArrayList<Integer> generateStartFields(int actualF){
-        int point = actualF;
-        if (actualF >= 0){
+
+    /* Generating random start fields in first click neighbourhood  */
+    public static void generateStartFields()
+    {
+        int point = actualField;
+
+        if (actualField >= 0)
+        {
             ArrayList<Integer> startFields = new ArrayList<>();
             
-            while(Settings.getStartFields() >= startFields.size()){
-                for (int id : getNeighbors(point)){
+            while(Settings.getStartFields() >= startFields.size())
+            {
+                for (int id : getNeighbors(point))
+                {
                     if (!startFields.contains(id))
                     {
                         startFields.add(id);
@@ -68,20 +94,26 @@ public class FieldsGenerator {
                 }
                 point = startFields.get(random.nextInt(startFields.size()));
             }
-            return startFields;
+            generatedStartFields = startFields;
         }
-        return null;
+        else generatedStartFields = null;
     }
 
-    public static ArrayList<Integer> getNeighbors(int index){
-        ArrayList<Integer> n = new ArrayList<>();
-        int row = index / Settings.getRows() - 1;
-        int column = index % Settings.getRows() - 1;
 
-        for(int a = 1 ; a < 10 ; a++){
+    /* It returns ArrayList of int index of neighbours */
+    public static ArrayList<Integer> getNeighbors(int index)
+    {
+        ArrayList<Integer> n = new ArrayList<>();
+        int row = index / Settings.getColumns() - 1;
+        int column = index % Settings.getColumns() - 1;
+
+        for(int a = 1 ; a < 10 ; a++)
+        {
             if(column >= 0 && column < Settings.getColumns() && row >= 0 && row < Settings.getRows())
                 n.add(row*Settings.getRows() + column);
-            if(a % 3 == 0){
+
+            if(a % 3 == 0)
+            {
                 column -= 3;
                 row ++;
             }
@@ -93,7 +125,13 @@ public class FieldsGenerator {
     public static void setActualField(int actualField) {
         FieldsGenerator.actualField = actualField;
     }
-    public static ArrayList<Integer> getGeneratedFields() {
-        return generatedFields;
+    public static int[][] getGeneratedFields() {
+        return generatedField;
+    }
+    public static ArrayList<Integer> getSFields(){
+        return generatedStartFields;
+    }    
+    public static int getActualField() {
+        return actualField;
     }
 }
