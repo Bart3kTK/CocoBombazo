@@ -2,6 +2,7 @@
 import java.io.IOException;
 
 import javafx.scene.Parent;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -20,13 +21,19 @@ public class GUI{
 
       Pane pane = (Pane) scene.lookup("#MyPane");
       Text timer = (Text) scene.lookup("#MyTimer");
+      Text score = (Text) scene.lookup("#MyScore");
+      Text bestScore = (Text) scene.lookup("#MyBestScore");
 
       pane.setClip(new Rectangle(0,0, Settings.getWindowWdth(), Settings.getWindowHeight()));
 
       stage.setHeight(Settings.getWindowHeight());
       stage.setWidth(Settings.getWindowWdth());
+      stage.setOnCloseRequest(e ->{
+        Platform.exit();
+        System.exit(0);
+      });
       
-      new GUIPane(pane, timer);
+      new GUIPane(pane, timer, score, bestScore);
 
       stage.setTitle("Saper");
       stage.setScene(scene);

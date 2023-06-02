@@ -6,9 +6,11 @@ public class GUIPane {
     private boolean firsClick = true;
     private int[][] gameMap;
     private int fieldsCounter = 0;
+    private int scoreVal = 0;
 
-    public GUIPane(Pane pane, Text timer){
+    public GUIPane(Pane pane, Text timer, Text score, Text bestScore){
         TimerThtrad th = new TimerThtrad(timer);
+        ScoreThread scTh = new ScoreThread(score, th);
         MySquare[][] squareList = new MySquare[Settings.getColumns()][Settings.getRows()];
         int[][] showedFields = new int [Settings.getColumns()][Settings.getRows()];
 
@@ -24,25 +26,24 @@ public class GUIPane {
         pane.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY)
             {
-                if (true){
-
-                    for(int a = 0; a < Settings.getColumns(); a++){
-                        for(int b = 0; b < Settings.getRows(); b++){
-                            if (squareList[a][b].isNowClicked() == true){
-                                FieldsGenerator.setActualField(squareList[a][b].getIndex());
-                                squareList[a][b].unClick();
-                                showedFields[a][b] = 1;
-                                System.out.println(showedFields[a][b]);
-                                break;
-                            }
-                            
-                        }
+                for(int a = 0; a < Settings.getColumns(); a++)
+                {
+                    for(int b = 0; b < Settings.getRows(); b++)
+                    {
+                        if (squareList[a][b].isNowClicked() == true)
+                        {
+                            FieldsGenerator.setActualField(squareList[a][b].getIndex());
+                            squareList[a][b].unClick();
+                            showedFields[a][b] = 1;
+                            break;
+                        } 
                     }
                 }
                 if (FieldsGenerator.getActualField() != -1 && firsClick == true)
                 {
                     firsClick = false;
                     th.start();
+                    scTh.start();
                     
                     FieldsGenerator.generateStartFields();
                     FieldsGenerator.genBombAndNumbers();
@@ -72,6 +73,8 @@ public class GUIPane {
                             if (showedFields[a][b] == 1){
                                 squareList[a][b].setIsClicked();
                                 changes ++;
+                                scoreVal += 100;
+
                                 showedFields[a][b] = 2;
                                 if (gameMap[a][b] == 0 || gameMap[a][b] == 10){
 
@@ -85,13 +88,12 @@ public class GUIPane {
                                         }
                                     }
                                 }
-
-
-                                
                             } 
                         }
+                        scTh.Load(scoreVal);
                     }
                 }
+                
                 fieldsCounter = 0;
                 for(int b = 0; b < Settings.getRows(); b++)
                 {
@@ -103,25 +105,24 @@ public class GUIPane {
                 for(int b = 0; b < Settings.getRows(); b++){
                     for(int a = 0; a < Settings.getColumns(); a++)
                     {
-                            if (( showedFields[a][b] > 0 && gameMap[a][b] == -1) || fieldsCounter == Settings.getBombs())
+                        if (( showedFields[a][b] > 0 && gameMap[a][b] == -1) || fieldsCounter == Settings.getBombs())
+                        {
+                            for(int row = 0; row < Settings.getRows(); row++)
                             {
-                                for(int row = 0; row < Settings.getRows(); row++){
-                                    for(int col = 0; col < Settings.getColumns(); col++){
-                                        if (gameMap[col][row] == -1) squareList[col][row].setIsClicked();
-                                    }
+                                for(int col = 0; col < Settings.getColumns(); col++)
+                                {
+                                    if (gameMap[col][row] == -1) squareList[col][row].setIsClicked();
                                 }
-                                th.stopRun();
-                                break;
                             }
-                            
+                            th.stopRun();
+                            scTh.stopRun();
+                            if (fieldsCounter == Settings.getBombs()) new GUIDialog("Congratulations !!!", score.getText() + "\n" + timer.getText());
+                            else new GUIDialog("Defeat!", score.getText() + "\n" + timer.getText());
+                            break;
+                        }  
                     }
                 }
-                System.out.println(fieldsCounter);
             }
-
-
-        });
-        
-    }
-    
+        });      
+    }  
 }

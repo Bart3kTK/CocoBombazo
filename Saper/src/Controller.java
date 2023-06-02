@@ -10,7 +10,13 @@ import javafx.scene.text.Text;
 public class Controller {
 
     @FXML
+    private Text MyBestScore;
+
+    @FXML
     private Pane MyPane;
+
+    @FXML
+    private Text MyScore;
 
     @FXML
     private Text MyTimer;
