@@ -35,7 +35,7 @@ public class GUI{
       
       new GUIPane(pane, timer, score, bestScore);
 
-      stage.setTitle("Saper");
+      stage.setTitle("Coco Bombazo");
       stage.setScene(scene);
       stage.show();
 

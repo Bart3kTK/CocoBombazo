@@ -9,10 +9,10 @@ public class ScoreThread extends Thread{
 	private volatile boolean threadSuspended = false;
     private Text score;
     private int scoreVal;
-    private TimerThtrad timer;
+    private TimerThread timer;
 	
 
-	ScoreThread(Text score, TimerThtrad timer)
+	ScoreThread(Text score, TimerThread timer)
     {
         this.score = score;
         this.timer = timer;

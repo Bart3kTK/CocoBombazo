@@ -9,7 +9,7 @@ public class GUIPane {
     private int scoreVal = 0;
 
     public GUIPane(Pane pane, Text timer, Text score, Text bestScore){
-        TimerThtrad th = new TimerThtrad(timer);
+        TimerThread th = new TimerThread(timer);
         ScoreThread scTh = new ScoreThread(score, th);
         MySquare[][] squareList = new MySquare[Settings.getColumns()][Settings.getRows()];
         int[][] showedFields = new int [Settings.getColumns()][Settings.getRows()];
