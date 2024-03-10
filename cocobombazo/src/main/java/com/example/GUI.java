@@ -37,7 +37,7 @@ public class GUI{
       dwa.setOnAction(e -> {
         Settings.setRows(16);
         Settings.setColumns(16);
-        Settings.setBombs(50);
+        Settings.setBombs(25);
         Settings.setStartFields(50);
         try {
           loadGame(stage);
@@ -49,7 +49,7 @@ public class GUI{
       trzy.setOnAction(e -> {
         Settings.setRows(25);
         Settings.setColumns(25);
-        Settings.setBombs(150);
+        Settings.setBombs(50);
         Settings.setStartFields(150);
         try {
           loadGame(stage);
@@ -61,7 +61,7 @@ public class GUI{
       cztery.setOnAction(e -> {
         Settings.setRows(50);
         Settings.setColumns(50);
-        Settings.setBombs(250);
+        Settings.setBombs(100);
         Settings.setStartFields(300);
         try {
           loadGame(stage);
